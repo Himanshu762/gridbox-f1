@@ -3,10 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 // Max response size: 15 MB (enough for HLS segments, blocks abuse)
 const MAX_RESPONSE_BYTES = 15 * 1024 * 1024;
 
-// Allowed target domains — only proxy known stream sources
+// Allowed entry-point domains — gates the initial stream URL only
+// Segment/sub-manifest URLs from HLS rewriting bypass this (they're proxy-generated)
 const ALLOWED_DOMAINS = new Set(
     (process.env.STREAM_ALLOWED_DOMAINS || "a1xs.vip").split(",").map(d => d.trim().toLowerCase())
 );
+
+// Track CDN domains seen during manifest rewriting so segments pass through
+const trustedCdnDomains = new Set<string>();
 
 // Block SSRF: internal/private/non-HTTP URLs
 function isBlockedUrl(url: string): boolean {
@@ -18,14 +22,11 @@ function isBlockedUrl(url: string): boolean {
         if (h.endsWith(".local") || h.endsWith(".internal") || h.endsWith(".localhost")) return true;
         if (h.startsWith("10.")) return true;
         if (h.startsWith("192.168.")) return true;
-        // 172.16.0.0 – 172.31.255.255
         if (h.startsWith("172.")) {
             const second = parseInt(h.split(".")[1], 10);
             if (second >= 16 && second <= 31) return true;
         }
-        // IPv6 link-local
         if (h.startsWith("fe80:") || h.startsWith("fd") || h === "[::1]") return true;
-        // Metadata endpoints (cloud)
         if (h === "169.254.169.254" || h === "metadata.google.internal") return true;
         return false;
     } catch {
@@ -33,17 +34,19 @@ function isBlockedUrl(url: string): boolean {
     }
 }
 
-// Check if target domain is in the allowlist (includes redirect destinations)
+// Check if target domain is allowed (entry-point allowlist + trusted CDN domains)
 function isDomainAllowed(url: string): boolean {
-    // If no allowlist configured (empty STREAM_ALLOWED_DOMAINS), allow all non-blocked
     if (ALLOWED_DOMAINS.size === 0) return true;
-    // Always allow proxying back through self (for rewritten HLS manifest segments)
     try {
         const hostname = new URL(url).hostname.toLowerCase();
-        // Allow if domain matches OR if any allowed domain is a suffix (subdomains)
-        return Array.from(ALLOWED_DOMAINS).some(
+        // Allow if in the configured allowlist (entry-point domains)
+        const inAllowlist = Array.from(ALLOWED_DOMAINS).some(
             d => hostname === d || hostname.endsWith(`.${d}`)
         );
+        if (inAllowlist) return true;
+        // Allow if this CDN domain was seen during a previous manifest rewrite
+        if (trustedCdnDomains.has(hostname)) return true;
+        return false;
     } catch {
         return false;
     }
@@ -170,6 +173,9 @@ export async function GET(request: NextRequest) {
         if (content.includes("#EXTM3U")) {
             const baseUrl = new URL(finalUrl);
             const basePath = baseUrl.origin + baseUrl.pathname.substring(0, baseUrl.pathname.lastIndexOf("/"));
+
+            // Trust this CDN domain for future segment/sub-manifest requests
+            trustedCdnDomains.add(baseUrl.hostname.toLowerCase());
 
             const rewritten = content
                 .split("\n")
