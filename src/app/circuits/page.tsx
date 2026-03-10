@@ -3,7 +3,7 @@ import CircuitsClient from "./circuits-client";
 import { getCircuits, getCurrentSchedule } from "@/lib/api/f1-client";
 
 export const metadata: Metadata = {
-    title: "Circuit Encyclopedia | GridBox F1",
+    title: "Circuit Encyclopedia | ParcFermé",
     description: "Explore every Formula 1 circuit on the current calendar.",
 };
 

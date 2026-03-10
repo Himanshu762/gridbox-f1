@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import StrategyClient from "./strategy-client";
 
 export const metadata: Metadata = {
-    title: "Strategy Analysis | GridBox F1",
+    title: "Strategy Analysis | ParcFermé",
     description: "Tyre strategy visualization and pit stop analysis for the latest session.",
 };
 

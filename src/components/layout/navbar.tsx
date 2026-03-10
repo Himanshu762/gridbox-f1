@@ -60,7 +60,7 @@ export function Navbar() {
                 <div className="flex items-center gap-3 shrink-0">
                     <Link href="/" className="flex items-center gap-3 group">
                         <span className="material-symbols-outlined text-2xl text-primary group-hover:scale-110 transition-transform">sports_motorsports</span>
-                        <span className="text-xl font-extrabold tracking-tight text-primary drop-shadow-[0_0_8px_rgba(225,6,0,0.6)]">GridBox F1</span>
+                        <span className="text-xl font-extrabold tracking-tight text-primary drop-shadow-[0_0_8px_rgba(225,6,0,0.6)]">ParcFermé</span>
                     </Link>
                     <span className="w-2 h-2 rounded-full bg-primary animate-pulse-fast shadow-[0_0_6px_rgba(225,6,0,0.8)]" aria-hidden="true" />
                 </div>

@@ -22,7 +22,7 @@ export function Footer() {
                         <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2.5">
                                 <span className="material-symbols-outlined text-xl text-primary">sports_motorsports</span>
-                                <span className="text-lg font-extrabold tracking-tight text-white">GridBox F1</span>
+                                <span className="text-lg font-extrabold tracking-tight text-white">ParcFermé</span>
                             </div>
                             <p className="text-[11px] text-slate-500 max-w-[280px] leading-relaxed">
                                 The free, all-in-one Formula 1 hub. Live timing, race analysis, telemetry, standings — everything an F1 fan needs.
@@ -70,7 +70,7 @@ export function Footer() {
 
                     <div className="mt-8 pt-4 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-2">
                         <span className="text-[10px] text-slate-600 font-mono">
-                            &copy; {new Date().getFullYear()} GridBox F1
+                            &copy; {new Date().getFullYear()} ParcFermé
                         </span>
                         <span className="text-[10px] text-slate-600 font-mono flex items-center gap-1.5">
                             Built with

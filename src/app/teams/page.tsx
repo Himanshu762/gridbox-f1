@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { getConstructorStandings, getCurrentStandings } from "@/lib/api/f1-client";
 
 export const metadata: Metadata = {
-    title: "Constructor Standings — GridBox F1",
+    title: "Constructor Standings — ParcFermé",
     description: "Official FIA Formula One World Championship Constructor Standings.",
 };
 

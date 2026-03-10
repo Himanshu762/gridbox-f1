@@ -61,7 +61,7 @@ function parseRss(xml: string, sourceName: string): NewsItem[] {
 async function fetchRedditPosts(): Promise<NewsItem[]> {
     try {
         const res = await fetch("https://www.reddit.com/r/formula1/hot.json?limit=20", {
-            headers: { "User-Agent": "GridBoxF1/1.0" },
+            headers: { "User-Agent": "ParcFermé/1.0" },
             next: { revalidate: 300 },
         });
         if (!res.ok) return [];

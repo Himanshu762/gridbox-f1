@@ -32,7 +32,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GridBox F1 — The Ultimate Formula 1 Hub",
+  title: "ParcFermé — The Ultimate Formula 1 Hub",
   description:
     "Live timing, race analysis, standings, geo-maps, telemetry — everything an F1 enthusiast needs. Built for the passionate.",
   keywords: ["Formula 1", "F1", "racing", "live timing", "standings", "telemetry"],

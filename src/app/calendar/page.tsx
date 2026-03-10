@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { getCurrentSchedule } from "@/lib/api/f1-client";
 
 export const metadata: Metadata = {
-    title: "Global Calendar — GridBox F1",
+    title: "Global Calendar — ParcFermé",
     description: "Interactive Formula 1 racing schedule and locations.",
 };
 
