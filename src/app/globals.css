@@ -1,26 +1,318 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/* ========================================
+   GRIDBOX F1 — DESIGN SYSTEM
+   ======================================== */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-f1-body);
+  --font-mono: var(--font-f1-mono);
+  --font-display: var(--font-f1-display);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* F1 Colors */
+  --color-f1-red: #E10600;
+  --color-f1-red-dark: #B30500;
+  --color-f1-red-glow: #FF3333;
+  --color-f1-black: #15151E;
+  --color-f1-white: #F7F4F1;
+  --color-f1-teal: #00D2BE;
+  --color-f1-purple: #9B59B6;
+  --color-f1-yellow: #FFC906;
+  --color-f1-gold: #D4AF37;
+
+  /* Tyre Colors */
+  --color-tyre-soft: #FF3333;
+  --color-tyre-medium: #FFD700;
+  --color-tyre-hard: #FFFFFF;
+  --color-tyre-inter: #39B54A;
+  --color-tyre-wet: #0072C6;
+
+  /* Team Colors — 2026 */
+  --color-team-redbull: #3671C6;
+  --color-team-mclaren: #FF8000;
+  --color-team-ferrari: #E8002D;
+  --color-team-mercedes: #27F4D2;
+  --color-team-aston: #229971;
+  --color-team-alpine: #FF87BC;
+  --color-team-williams: #1868DB;
+  --color-team-rb: #6692FF;
+  --color-team-audi: #FF2D00;
+  --color-team-haas: #DEE1E2;
+  --color-team-cadillac: #FFB81C;
+
+  /* Sector Colors */
+  --color-sector-purple: #A855F7;
+  --color-sector-green: #22C55E;
+  --color-sector-yellow: #EAB308;
+
+  /* Custom Animations */
+  --animate-pulse-fast: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-speed-lines: speedLines 2s linear infinite;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  --background: #0F0F13;
+  --foreground: #F7F4F1;
+  --card: #1A1A24;
+  --card-foreground: #F7F4F1;
+  --popover: #222230;
+  --popover-foreground: #F7F4F1;
+  --primary: #E10600;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1A1A24;
+  --secondary-foreground: #F7F4F1;
+  --muted: #222230;
+  --muted-foreground: #8B8B9E;
+  --accent: #2A2A3A;
+  --accent-foreground: #F7F4F1;
+  --destructive: #E10600;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #E10600;
+  --chart-1: #E10600;
+  --chart-2: #00D2BE;
+  --chart-3: #FF8000;
+  --chart-4: #3671C6;
+  --chart-5: #27F4D2;
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-f1-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background: rgba(225, 6, 0, 0.3);
+    color: #fff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ========================================
+   F1 ANIMATIONS
+   ======================================== */
+
+/* Speed Lines Background */
+@keyframes speedLines {
+  0% { transform: translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateX(-100vw); opacity: 0; }
+}
+
+/* Pulse Glow (for LIVE indicators) */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(225, 6, 0, 0.6); }
+  50% { opacity: 0.7; box-shadow: 0 0 20px rgba(225, 6, 0, 0.9); }
+}
+
+/* Start Lights */
+@keyframes lightOn {
+  0% { background: #333; box-shadow: none; }
+  100% { background: #E10600; box-shadow: 0 0 20px #E10600; }
+}
+
+@keyframes lightOff {
+  0% { background: #E10600; box-shadow: 0 0 20px #E10600; }
+  100% { background: #333; box-shadow: none; }
+}
+
+/* Track Pulse */
+@keyframes trackPulse {
+  0% { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Shimmer (for gold/silver/bronze) */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Flip Clock Digit */
+@keyframes flipDown {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-90deg); }
+}
+
+/* Beacon Pulse (for map pins) */
+@keyframes beaconPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* Tyre Spin */
+@keyframes tyreSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+/* Carbon Fiber Texture */
+.carbon-fiber {
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0;
+}
+
+/* F1 Red Glow */
+.glow-red {
+  box-shadow: 0 0 20px rgba(225, 6, 0, 0.4);
+}
+
+/* Live Pulse */
+.live-pulse {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Gold Shimmer */
+.shimmer-gold {
+  background: linear-gradient(90deg, #D4AF37, #F5E7A3, #D4AF37, #F5E7A3, #D4AF37);
+  background-size: 400% 100%;
+  animation: shimmer 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Tyre Spinner */
+.tyre-spin {
+  animation: tyreSpin 0.8s linear infinite;
+}
+
+/* Monospace Data */
+.font-data {
+  font-family: var(--font-f1-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* F1 Section Title */
+.f1-title {
+  font-family: var(--font-f1-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0F0F13;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* ========================================
+   STITCH MCP PREMIUM HUB STYLES
+   ======================================== */
+
+@utility glass {
+    background: rgba(26, 26, 36, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@utility carbon-pattern {
+    background-color: var(--background);
+    background-image: 
+        linear-gradient(45deg, #131318 25%, transparent 25%, transparent 75%, #131318 75%, #131318), 
+        linear-gradient(45deg, #131318 25%, transparent 25%, transparent 75%, #131318 75%, #131318);
+    background-size: 10px 10px;
+    background-position: 0 0, 5px 5px;
+}
+
+@utility carbon-card {
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 4px);
+}
+
+@utility text-glow-primary {
+    text-shadow: 0 0 10px rgba(225, 6, 0, 0.8), 0 0 20px rgba(225, 6, 0, 0.4);
+}
+
+@keyframes scroll-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@utility animate-scroll-x {
+    animation: scroll-x 30s linear infinite;
+}
+
+@utility hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+}
+
+/* F1 Animation Utilities */
+@utility animate-light-on { animation: lightOn 0.3s ease-out forwards; }
+@utility animate-light-off { animation: lightOff 0.3s ease-in forwards; }
+@utility animate-track-pulse { animation: trackPulse 2s ease-in-out infinite; }
+@utility animate-beacon-pulse { animation: beaconPulse 1.5s ease-out infinite; }
+@utility animate-flip-down { animation: flipDown 0.4s ease-in forwards; }
+@utility animate-shimmer { animation: shimmer 3s linear infinite; }
+@utility animate-tyre-spin { animation: tyreSpin 0.8s linear infinite; }
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
