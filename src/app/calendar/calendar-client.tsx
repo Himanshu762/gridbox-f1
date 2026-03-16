@@ -32,10 +32,11 @@ interface Race {
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
 function processSchedule(apiData: any[]): Race[] {
+    if (!Array.isArray(apiData)) return [];
     const now = new Date();
     let nextFound = false;
 
-    return apiData.map((r: any) => {
+    return apiData.filter((r: any) => r && r.round && r.date && r.Circuit?.Location).map((r: any) => {
         const raceDate = new Date(r.date + "T" + (r.time || "00:00:00Z"));
         let status: 'completed' | 'next' | 'upcoming' = 'upcoming';
 
@@ -521,7 +522,7 @@ export default function CalendarClient({ initialSchedule }: CalendarClientProps)
                                         <div className="p-4 relative z-10">
                                             {/* Round + Date row */}
                                             <div className="flex items-start justify-between mb-3">
-                                                <span className="text-[10px] font-bold text-slate-500 font-f1 uppercase tracking-widest">R{r.round.toString().padStart(2, '0')}</span>
+                                                <span className="text-[10px] font-bold text-slate-500 font-f1 uppercase tracking-widest">R{String(r.round).padStart(2, '0')}</span>
                                                 <div className="flex flex-col items-end">
                                                     <span className="text-lg font-black text-white font-f1 leading-none">{day}</span>
                                                     <span className="text-[10px] font-bold text-slate-500 font-f1">{month}</span>
