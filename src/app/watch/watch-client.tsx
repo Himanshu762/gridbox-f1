@@ -15,7 +15,7 @@ interface Channel {
 
 // Sky Sports F1 — HLS channel (Vercel serverless compatible)
 const CHANNELS: Channel[] = [
-    { name: "Sky Sports F1 FHD", url: "https://a1xs.vip/2000005", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "F1 Live" },
+    { name: "Sky Sports F1 FHD", url: "https://westreamf1.com/westreamf1.php", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "F1 Live" },
 ];
 
 export default function WatchClient() {
@@ -33,10 +33,12 @@ export default function WatchClient() {
         setIsMounted(true);
     }, []);
 
+    // Prefer Cloudflare Worker proxy (free unlimited bandwidth) over Vercel /api/stream
+    const proxyBase = process.env.NEXT_PUBLIC_STREAM_PROXY_URL || '/api/stream';
     const streamUrl = activeChannel
-        ? `/api/stream?url=${encodeURIComponent(activeChannel.url)}`
+        ? `${proxyBase}?url=${encodeURIComponent(activeChannel.url)}`
         : customUrl
-            ? `/api/stream?url=${encodeURIComponent(customUrl)}`
+            ? `${proxyBase}?url=${encodeURIComponent(customUrl)}`
             : '';
 
     // HLS stream engine with auto-reconnect

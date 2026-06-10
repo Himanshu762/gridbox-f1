@@ -17,6 +17,20 @@ const nextConfig: NextConfig = {
                 headers: securityHeaders,
             },
             {
+                // Immutable hashed bundles — cache forever
+                source: "/_next/static/:path*",
+                headers: [
+                    { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+                ],
+            },
+            {
+                // Favicon and public assets
+                source: "/favicon.ico",
+                headers: [
+                    { key: "Cache-Control", value: "public, max-age=86400" },
+                ],
+            },
+            {
                 // Stricter CSP-like headers for API routes
                 source: "/api/:path*",
                 headers: [

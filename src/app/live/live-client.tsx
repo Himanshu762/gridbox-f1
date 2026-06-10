@@ -34,7 +34,7 @@ const SECTOR_COLORS: Record<string, string> = {
     yellow: "text-yellow-300 bg-yellow-500/10",
 };
 
-const POLL_RATE_LIVE = 2000;
+const POLL_RATE_LIVE = 4000;  // 4s is still real-time enough; halves bandwidth vs 2s
 const POLL_RATE_IDLE = 60000;
 
 function getTrackStatusFromRC(messages: OpenF1RaceControl[]): { label: string; color: string; bg: string; icon: string; pulse: boolean } {
@@ -58,6 +58,7 @@ export default function LiveClient() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [isVisible, setIsVisible] = useState(true);
+    const pollCycleRef = useRef(0);
     const radioEndRef = useRef<HTMLDivElement>(null);
 
     const sessionActive = useMemo(() => isSessionActive(sessionData), [sessionData]);
@@ -72,22 +73,32 @@ export default function LiveClient() {
 
     const loadLiveTiming = useCallback(async () => {
         setError(null);
+        const cycle = pollCycleRef.current++;
+        // Fetch secondary data (radio, pits, stints) every 3rd cycle to reduce bandwidth
+        const fetchSecondary = cycle % 3 === 0;
         try {
-            const [timing, rc, wx, radio, pits, stintData] = await Promise.all([
+            const [timing, rc, wx] = await Promise.all([
                 fetchLiveTimingData(),
                 fetchRaceControl(),
                 fetchWeather(),
-                fetchTeamRadio(),
-                fetchPitStops(),
-                fetchStints(),
             ]);
+
             setSessionData(timing.session);
             setTimingData(timing.grid);
             setRaceControl(rc.slice(-10));
             setWeather(wx);
-            setTeamRadio(radio.slice(-20));
-            setPitStops(pits);
-            setStints(stintData);
+
+            if (fetchSecondary) {
+                const [radio, pits, stintData] = await Promise.all([
+                    fetchTeamRadio(),
+                    fetchPitStops(),
+                    fetchStints(),
+                ]);
+                setTeamRadio(radio.slice(-20));
+                setPitStops(pits);
+                setStints(stintData);
+            }
+
             setIsLoading(false);
         } catch (err) {
             setError("Failed to connect to live timing. Retrying...");
@@ -228,7 +239,7 @@ export default function LiveClient() {
                                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-f1">Polling</span>
                                     <span className="text-white font-bold font-mono tracking-widest text-sm flex items-center gap-2">
                                         <div className={`w-2 h-2 rounded-full ${sessionActive ? 'bg-green-500 shadow-[0_0_8px_#22c55e] animate-pulse' : 'bg-yellow-500'}`} />
-                                        {sessionActive ? '2s LIVE' : '60s IDLE'}
+                                        {sessionActive ? '4s LIVE' : '60s IDLE'}
                                     </span>
                                 </div>
                             </div>

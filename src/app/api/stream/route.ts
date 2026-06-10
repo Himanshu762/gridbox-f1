@@ -6,7 +6,7 @@ const MAX_RESPONSE_BYTES = 15 * 1024 * 1024;
 // Allowed entry-point domains — gates the initial stream URL only
 // Segment/sub-manifest URLs from HLS rewriting bypass this (they're proxy-generated)
 const ALLOWED_DOMAINS = new Set(
-    (process.env.STREAM_ALLOWED_DOMAINS || "a1xs.vip").split(",").map(d => d.trim().toLowerCase())
+    (process.env.STREAM_ALLOWED_DOMAINS || "westreamf1.com").split(",").map(d => d.trim().toLowerCase())
 );
 
 // Track CDN domains seen during manifest rewriting so segments pass through
