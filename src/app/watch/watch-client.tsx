@@ -17,8 +17,8 @@ interface Channel {
 // F1 Stream Channels — VipLeague Links & Dedicated Players
 const CHANNELS: Channel[] = [
     // VipLeague Streams (Web Players)
-    { name: "Sky Sports F1 (Alt)", url: "https://videocdn-4726.website/shopping2/?channel_id=sky_sport_f1_uk", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" },
-    { name: "WeStreamF1 (Web)", url: "https://westreamf1.com/westreamf1.php", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" }
+    { name: "Sky Sports F1 HD", url: "https://videocdn-4726.website/shopping2/?channel_id=sky_sport_f1_uk", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" },
+    { name: "Sky Sports F1 HD (Alt)", url: "https://westreamf1.com/westreamf1.php", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" }
 ];
 
 export default function WatchClient() {
