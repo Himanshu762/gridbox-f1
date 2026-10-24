@@ -20,7 +20,6 @@ const CHANNELS: Channel[] = [
     { name: "Sky Sports F1 HD", url: "https://embdlol.st/embed/01a16e9c-5dc2-702a-b16e-952b6d22213e", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" },
     { name: "Sky Sports F1 HD", url: "https://taifood-blog.asia/embed/f1/2026/united-states/fp3", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" },
     { name: "Sky Sports F1 HD", url: "https://ntv.st/embed?t=U3kvVGsxU1RSbFNVNzYraHQ0eDVFWktGeGVzQkNwSHdpdVRML1F2aWtWSVBQcGl2YmNUenQwQ21ESFIyanZScGxQRU5OQWNSYnk3dG5jRmlKMGJjdHR0MFZtZUJ6VTZNVjJhM1lwVnNDNW89", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" },
-    { name: "Sky Sports F1 HD", url: "https://gdplayer.st/5f136b5c-6882-4a8f-9daa-5ff4c1239f0d", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" },
     { name: "Sky Sports F1 HD", url: "https://thedaddy.pk/stream/stream-60.php", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" },
     { name: "Sky Sports F1 HD (Alt)", url: "https://westreamf1.com/westreamf1.php", logo: "https://i.ibb.co/h26bK2Q/sky-f1.png", group: "Web Players", type: "iframe" }
 ];
